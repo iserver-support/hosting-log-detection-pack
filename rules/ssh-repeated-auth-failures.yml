@@ -1,0 +1,20 @@
+title: Repeated SSH Authentication Failures From One Source
+id: 8c6b8d52-56f5-4bcb-9a7d-7a5b2d0b0001
+status: experimental
+description: Detects individual SSH authentication failure events; aggregate by source IP over a time window in the SIEM to identify brute-force-like behavior.
+logsource:
+  product: linux
+  service: sshd
+detection:
+  selection:
+    message|contains:
+      - "Failed password"
+      - "authentication failure"
+  condition: selection
+falsepositives:
+  - Users mistyping passwords
+  - Authorized security testing
+level: medium
+tags:
+  - attack.credential_access
+  - attack.t1110

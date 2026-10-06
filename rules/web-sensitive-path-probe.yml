@@ -1,0 +1,21 @@
+title: Web Request to Sensitive Configuration or Repository Path
+id: 8c6b8d52-56f5-4bcb-9a7d-7a5b2d0b0002
+status: experimental
+description: Detects requests for common sensitive files or repository metadata in web access logs.
+logsource:
+  category: webserver
+detection:
+  selection:
+    url.path|contains:
+      - "/.env"
+      - "/.git/config"
+      - "/wp-config.php"
+      - "/.htpasswd"
+  condition: selection
+falsepositives:
+  - Authorized vulnerability scanners
+  - Security testing against a controlled environment
+level: medium
+tags:
+  - attack.discovery
+  - attack.t1595

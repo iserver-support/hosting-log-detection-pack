@@ -1,0 +1,18 @@
+title: Repeated WordPress Login Endpoint Requests
+id: 8c6b8d52-56f5-4bcb-9a7d-7a5b2d0b0003
+status: experimental
+description: Identifies POST requests to the WordPress login endpoint. Aggregate by source IP and time window; this alone does not prove failed authentication.
+logsource:
+  category: webserver
+detection:
+  selection:
+    http.request.method: POST
+    url.path|endswith: "/wp-login.php"
+  condition: selection
+falsepositives:
+  - Legitimate user logins
+  - Monitoring or authorized testing
+level: low
+tags:
+  - attack.credential_access
+  - attack.t1110
